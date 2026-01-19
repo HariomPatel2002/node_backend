@@ -41,16 +41,19 @@ const userSchema = new Schema({
         type: String,
         required:[true,'Password is required']
     },
-    refershToken:{
+    refreshToken:{
         type:String,
     }
 },{timestamps:true});
 
-userSchema.pre("save", async function (next) {
-    if(!this.isModified("password")) return next();
+userSchema.pre("save", async function () {
+    if(!this.isModified("password")) return;
 
-    this.password = await bcrypt.hash(this.password, 10);
-    next();
+    try {
+        this.password = await bcrypt.hash(this.password, 10);
+    } catch (error) {
+        throw error;
+    }
 })
 
 userSchema.methods.isPasswordCorrect = async function(password){
