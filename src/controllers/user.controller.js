@@ -69,7 +69,7 @@ const registerUser = asyncHandler( async (req,res)=>{
     const options = {
         httpOnly: true,
         secure: true,
-        sameSite: "strict"
+        sameSite: "st   rict"
     }
     return res.status(201).cookie("refreshToken", refreshToken, options).
     cookie("accessToken", accessToken, options)
